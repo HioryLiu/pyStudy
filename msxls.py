@@ -2,6 +2,9 @@ import MySQLdb
 import xlrd
 import  xlsxwriter as wx
 
+
+_version_='1.1.1'
+
 host='127.0.0.1'
 username='root'
 password='sjtuld0218'
