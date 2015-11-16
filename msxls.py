@@ -3,7 +3,7 @@ import xlrd
 import  xlsxwriter as wx
 
 
-_version_='1.1.1'
+_version_='1.1.2'
 
 def mstoxls(cnx,tbname,xlsname=''):
 
