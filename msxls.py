@@ -2,7 +2,7 @@ import MySQLdb
 import xlrd
 import  xlsxwriter as wx
 
-
+#You can write your data from mysqlDB to excel with this.
 _version_='1.1.2'
 
 def mstoxls(cnx,tbname,xlsname=''):
