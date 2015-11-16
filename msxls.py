@@ -5,22 +5,21 @@ import  xlsxwriter as wx
 
 _version_='1.1.1'
 
-host='127.0.0.1'
-username='root'
-password='sjtuld0218'
-charset='utf8'
-cnx=MySQLdb.connect(host,username,password,'jdbcstudy',charset=charset)
-def mstoxls(tbname,xlsname=''):
+def mstoxls(cnx,tbname,xlsname=''):
 
     if cnx:
         cursor=cnx.cursor()
+    else:
+        print 'mysql con not been connected'
+        pass
     sqlsent="select * from "+tbname
     data=(tbname,)
     cursor.execute(sqlsent)
     if not xlsname:
         xlsname=tbname
     try:
-        wb = wx.Workbook(xlsname+'.xls')
+        dir1=''
+        wb = wx.Workbook(dir1+xlsname+'.xls')
         ws=wb.add_worksheet(tbname)
         x1=1
         x3=0
@@ -40,6 +39,37 @@ def mstoxls(tbname,xlsname=''):
         print 'file cannot been created'
         pass
 
+def xlstoms(cnx,xlsname,tbname=''):
+    if cnx:
+        cursor1=cnx.cursor()
+    else:
+        print 'mysql con not been connected'
+        pass
 
-mstoxls("info")
+
+    data=xlrd.open_workbook(xlsname)
+    table = data.sheet_by_index(0)
+    listr=table._cell_values
+    list_row1=listr[0]
+    listn=listr[1:]
+    ziduan=",".join(list_row1)
+    print ziduan
+
+
+    vals_li=[]
+    ti=()
+    for i in listn:
+        print str(i)
+
+        ms=','.join(str(i))
+        ti=(ms)
+        print ti
+    vals_li.append(ti)
+    print vals_li
+
+
+    sql_set="insert into "+tbname+"("+ziduan+") values (%s)"
+    cursor1.executemany(sql_set,vals_li)
+    # cnx.commit()
+    print sql_set
 
